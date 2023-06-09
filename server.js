@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors') 
 const db = require('./data/init')
 const userRouter = require('./router/user')
 const productRouter = require('./router/product')
@@ -7,6 +8,7 @@ const orderRowRouter = require('./router/orderRow')
 
 db.connect()
 const app = express()
+app.use(cors())
 app.use(express.json()) 
 
 app.use('/api/user', userRouter)

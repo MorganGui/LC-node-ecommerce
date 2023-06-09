@@ -12,7 +12,7 @@ const getAll = async (model, res) => {
       res.status(404).json([])
     }
 
-  } catch {
+  } catch (e) {
     sendError(res)
   }
 }

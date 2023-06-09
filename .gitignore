@@ -1,2 +1,3 @@
 node_modules
-data/SQLite.db
+data/*.db
+data/*.db-journal

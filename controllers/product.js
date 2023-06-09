@@ -21,8 +21,7 @@ const add = async (req, res) => {
   const product = {
     name: req.body.name,
     desc: req.body.desc,
-    price: req.body.price,
-    picture: req.body.picture
+    price: req.body.price
   }
   checkValues(product, res)
   await functions.add(model, product, res)
@@ -32,8 +31,7 @@ const update = async (req, res) => {
     id: req.params.id,
     name: req.body.name,
     desc: req.body.desc,
-    price: req.body.price,
-    picture: req.body.picture
+    price: req.body.price
   }
   checkValues(product, res)
   await functions.update(model, product, res)

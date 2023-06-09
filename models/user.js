@@ -17,7 +17,7 @@ const add = async ({ firstname, lastname, mail, password }) => {
   const hash = await bcrypt.hash(password, saltRounds)
   return await db.database.run(
     'insert into user (firstname, lastname, mail, password, role) values (?, ?, ?, ?, ?)',
-    firstname, lastname, mail, 'user', hash
+    firstname, lastname, mail, hash, 'user'
   )
 }
 const update = async ({ id, firstname, lastname, mail, password, role = 'user' }) => {

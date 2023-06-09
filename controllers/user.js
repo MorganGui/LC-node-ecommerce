@@ -10,6 +10,8 @@ const checkValues = async (user, res) => {
     res.status(400).end('Invalid mail')
   if ([null, undefined].includes(user.password) || typeof user.password !== 'string')
     res.status(400).end('Invalid password')
+    if (!['user', 'admin'].includes(user.role))
+      res.status(400).end('Invalid role')
 
   try {
     const mails = await model.getByMail(user.mail)
@@ -33,8 +35,7 @@ const add = async (req, res) => {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     mail: req.body.mail,
-    password: req.body.password,
-    role: req.body.role
+    password: req.body.password
   }
   await checkValues(user, res)
   await functions.add(model, user, res)
