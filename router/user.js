@@ -6,8 +6,8 @@ const checkAdmin = require('../middlewares/checkAdmin')
 const router = express.Router()
 
 router.get('/', checkToken, getAll)
-router.get('/:id', checkToken, getById)
 router.get('/admin', checkToken, checkAdmin, getAdmin)
+router.get('/:id', checkToken, getById)
 
 router.post('/', register)
 router.put('/:id', checkToken, update)

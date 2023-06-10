@@ -8,7 +8,7 @@ const checkToken = (req, res, next) => {
     req.user = decoded
     next()
   } catch {
-    res.status(401).json('wrong token')
+    res.status(401).end('wrong token')
   }
 }
 

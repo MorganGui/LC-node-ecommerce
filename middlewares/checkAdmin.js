@@ -2,7 +2,7 @@ const checkAdmin = (req, res, next) => {
   if (req.user.role === 'admin') {
     next()
   } else {
-    res.status(401).json('unauthorized')
+    res.status(401).end('unauthorized')
   }
 }
 
