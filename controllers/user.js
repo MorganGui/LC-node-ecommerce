@@ -38,9 +38,17 @@ const getById = async (req, res) => {
     res.status(500).end('Internal Server Error')
   }
 }
+const getByMail = async (req, res) => {
+  try {
+    const response = await model.getByMail()
+    res.status(200).json(response)
+  } catch {
+    res.status(500).end('Internal Server Error')
+  }
+}
 const getAdmin = async (req, res) => {
   try {
-    const response = await model.getAdmin()
+    const response = await model.getAdmin(req.params.mail)
     res.status(200).json(response)
   } catch {
     res.status(500).end('Internal Server Error')
@@ -102,4 +110,4 @@ const login = async (req, res) => {
   }
 }
 
-module.exports = { getAll, getById, getAdmin, register, update, del, login }
+module.exports = { getAll, getById, getByMail, getAdmin, register, update, del, login }

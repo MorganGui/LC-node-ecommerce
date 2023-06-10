@@ -9,6 +9,9 @@ const getAll = async () => {
 const getById = async (id) => {
   return await db.database.get('select * from user where id=?', id)
 }
+const getByMail = async (mail) => {
+  return await db.database.get('select * from user where mail=?', mail)
+}
 const getAdmin = async () => {
   return await db.database.get('select * from user where role="admin"')
 }
@@ -54,4 +57,4 @@ const login = async (mail, password) => {
   else return { error: 'auth/wrong-mail' }
 }
 
-module.exports = { getAll, getById, getAdmin, register, update, del, login }
+module.exports = { getAll, getById, getByMail, getAdmin, register, update, del, login }
