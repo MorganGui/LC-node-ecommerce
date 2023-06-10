@@ -1,20 +1,29 @@
 const model = require('../models/product')
-const functions = require('./functions')
 
 const checkValues = (product, res) => {
   if ([null, undefined].includes(product.name) || typeof product.name !== 'string')
-    res.status(400).end('Invalid name')
+    res.status(400).json('Invalid name')
   if ([null, undefined].includes(product.desc) || typeof product.desc !== 'string')
-    res.status(400).end('Invalid desc')
+    res.status(400).json('Invalid desc')
   if ([null, undefined].includes(product.price) || typeof product.price !== 'number')
-    res.status(400).end('Invalid price')
+    res.status(400).json('Invalid price')
 }
 
 const getAll = async (req, res) => {
-  await functions.getAll(model, res)
+  try {
+    const response = await model.getAll()
+    res.status(200).json(response)
+  } catch {
+    res.status(500).json('Internal server error.')
+  }
 }
 const getById = async (req, res) => {
-  await functions.getById(model, res, req.params.id)
+  try {
+    const response = await model.getById(req.params.id)
+    res.status(200).json(response)
+  } catch {
+    res.status(500).json('Internal Server Error')
+  }
 }
 
 const add = async (req, res) => {
@@ -24,7 +33,13 @@ const add = async (req, res) => {
     price: req.body.price
   }
   checkValues(product, res)
-  await functions.add(model, product, res)
+
+  try {
+    const response = await model.add(product)
+    res.status(200).json(response)
+  } catch {
+    res.status(500).json('Internal Server Error')
+  }
 }
 const update = async (req, res) => {
   const product = {
@@ -34,10 +49,21 @@ const update = async (req, res) => {
     price: req.body.price
   }
   checkValues(product, res)
-  await functions.update(model, product, res)
+
+  try {
+    const response = await model.update(product)
+    res.status(200).json(response)
+  } catch {
+    res.status(500).json('Internal Server Error')
+  }
 }
 const del = async (req, res) => {
-  await functions.del(model, req, res)
+  try {
+    const response = await model.del(req.params.id)
+    res.status(200).json(response)
+  } catch {
+    res.status(500).json('Internal Server Error')
+  }
 }
 
 module.exports = { getAll, getById, add, update, del }

@@ -11,9 +11,9 @@ const app = express()
 app.use(cors())
 app.use(express.json()) 
 
-app.use('/api/user', userRouter)
-app.use('/api/product', productRouter)
-app.use('/api/order', orderRouter)
-app.use('/api/order-row', orderRowRouter)
+app.use('/api/v1/user', userRouter)
+app.use('/api/v1/product', productRouter)
+app.use('/api/v1/order', orderRouter)
+app.use('/api/v1/order-row', orderRowRouter)
 
 app.listen(3000)

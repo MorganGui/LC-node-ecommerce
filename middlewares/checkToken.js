@@ -7,7 +7,7 @@ const checkToken = (req, res, next) => {
     const decoded = jwt.verify(token, jwtKey)
     req.user = decoded
     next()
-  } catch (e) {
+  } catch {
     res.status(401).json('wrong token')
   }
 }
