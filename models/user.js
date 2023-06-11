@@ -13,7 +13,7 @@ const getByMail = async (mail) => {
   return await db.database.get('select * from user where mail=?', mail)
 }
 const getAdmin = async () => {
-  return await db.database.get('select * from user where role="admin"')
+  return await db.database.all('select * from user where role="admin"')
 }
 
 const register = async ({ firstname, lastname, mail, password, role }) => {
@@ -26,10 +26,10 @@ const register = async ({ firstname, lastname, mail, password, role }) => {
   const token = jwt.sign(user, jwtKey)
   return { token, user }
 }
-const update = async ({ id, firstname, lastname, mail, password, role = 'user' }) => {
+const update = async ({ id, firstname, lastname, mail, role = 'user' }) => {
   return await db.database.run(
-    'update user set firstname=?, lastname=?, mail=?, password=?, role=? where id=?',
-    firstname, lastname, mail, password, role, id
+    'update user set firstname=?, lastname=?, mail=?, role=? where id=?',
+    firstname, lastname, mail, role, id
   )
 }
 const del = async (id) => {

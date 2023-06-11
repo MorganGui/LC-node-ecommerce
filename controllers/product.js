@@ -22,7 +22,7 @@ const getById = async (req, res) => {
     const response = await model.getById(req.params.id)
     res.status(200).json(response)
   } catch {
-    res.status(500).end('Internal Server Error')
+    res.status(500).end('Internal Server Error.')
   }
 }
 
@@ -38,7 +38,7 @@ const add = async (req, res) => {
     const response = await model.add(product)
     res.status(200).json(response)
   } catch {
-    res.status(500).end('Internal Server Error')
+    res.status(500).end('Internal Server Error.')
   }
 }
 const update = async (req, res) => {
@@ -54,7 +54,7 @@ const update = async (req, res) => {
     const response = await model.update(product)
     res.status(200).json(response)
   } catch {
-    res.status(500).end('Internal Server Error')
+    res.status(500).end('Internal Server Error.')
   }
 }
 const del = async (req, res) => {
@@ -62,7 +62,7 @@ const del = async (req, res) => {
     const response = await model.del(req.params.id)
     res.status(200).json(response)
   } catch {
-    res.status(500).end('Internal Server Error')
+    res.status(500).end('Internal Server Error.')
   }
 }
 
