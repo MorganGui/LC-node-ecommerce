@@ -32,7 +32,7 @@ const getAll = async (req, res) => {
 const getById = async (req, res) => {
   try {
     const response = await model.getById(req.params.id)
-    res.status(200).json(response)
+    res.status(200).json(response ? response : null)
   } catch {
     res.status(500).end('Internal Server Error.')
   }
@@ -40,7 +40,7 @@ const getById = async (req, res) => {
 const getByMail = async (req, res) => {
   try {
     const response = await model.getByMail(req.params.mail)
-    res.status(200).json(response)
+    res.status(200).json(response ? response : null)
   } catch {
     res.status(500).end('Internal Server Error.')
   }
@@ -108,7 +108,7 @@ const del = async (req, res) => {
 const login = async (req, res) => {
   try {
     const response = await model.login(req.body.mail, req.body.password)
-    res.status(200).json(response)
+    res.status(200).json(response ? response : null)
   } catch {
     res.status(500).end('Internal Server Error.')
   }
