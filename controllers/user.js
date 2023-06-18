@@ -2,22 +2,23 @@ const model = require('../models/user')
 
 const checkValues = async (user, res) => {
   if ([null, undefined].includes(user.firstname) || typeof user.firstname !== 'string')
-    res.status(400).end('Invalid firstname')
+    return 'Invalid firstname'
   if ([null, undefined].includes(user.lastname) || typeof user.lastname !== 'string')
-    res.status(400).end('Invalid lastname')
+    return 'Invalid lastname'
   if ([null, undefined].includes(user.mail) || typeof user.mail !== 'string')
-    res.status(400).end('Invalid mail')
+    return 'Invalid mail'
   if (!['user', 'admin'].includes(user.role))
-    res.status(400).end('Invalid role')
+    return 'Invalid role'
 
   try {
-    const mails = await model.getByMail(user.mail)
-    if (mails.length > 0 && mails[0].id !== user.id) {
-      res.status(400).end('Mail is already registered')
+    const users = await model.getByMail(user.mail)
+    if (users.length > 0 && users[0].id !== user.id) {
+      return 'Mail is already registered'
     }
   } catch {
     res.status(500).end('Internal Server Error.')
   }
+  return null
 }
 
 const getAll = async (req, res) => {
@@ -39,11 +40,7 @@ const getById = async (req, res) => {
 const getByMail = async (req, res) => {
   try {
     const response = await model.getByMail(req.params.mail)
-    if (response) {
-      res.status(200).json(response)
-    } else {
-      res.status(404).end('User not found.')
-    }
+    res.status(200).json(response)
   } catch {
     res.status(500).end('Internal Server Error.')
   }
@@ -65,13 +62,17 @@ const register = async (req, res) => {
     password: req.body.password,
     role: 'user'
   }
-  await checkValues(user, res)
+  const error = await checkValues(user, res)
 
-  try {
-    const response = await model.register(user)
-    res.status(200).json(response)
-  } catch {
-    res.status(500).end('Internal server error.')
+  if (error) {
+    res.status(200).json({ error: error })
+  } else {
+    try {
+      const response = await model.register(user)
+      res.status(200).json(response)
+    } catch {
+      res.status(500).end('Internal server error.')
+    }
   }
 }
 const update = async (req, res) => {
@@ -82,13 +83,17 @@ const update = async (req, res) => {
     mail: req.body.mail,
     role: req.body.role
   }
-  await checkValues(user, res)
+  const error = await checkValues(user, res)
 
-  try {
-    const response = await model.update(user)
-    res.status(200).json(response)
-  } catch {
-    res.status(500).end('Internal Server Error.')
+  if (error) {
+    res.status(200).json({ error: error })
+  } else {
+    try {
+      const response = await model.update(user)
+      res.status(200).json(response)
+    } catch {
+      res.status(500).end('Internal Server Error.')
+    }
   }
 }
 const del = async (req, res) => {
@@ -99,8 +104,6 @@ const del = async (req, res) => {
     res.status(500).end('Internal Server Error.')
   }
 }
-
-
 
 const login = async (req, res) => {
   try {
